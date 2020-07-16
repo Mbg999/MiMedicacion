@@ -65,7 +65,7 @@ CREATE TABLE `users` (
   `email` varchar(250) NOT NULL,
   `password` varchar(80) NOT NULL,
   `name` varchar(200) NOT NULL,
-  `bord_date` date NOT NULL,
+  `born_date` date NOT NULL,
   `picture` varchar(100) DEFAULT NULL,
   `mins_before` tinyint(4) NOT NULL DEFAULT 5,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
