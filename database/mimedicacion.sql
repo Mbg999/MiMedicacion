@@ -49,6 +49,7 @@ CREATE TABLE `medications` (
 --
 
 CREATE TABLE `taken` (
+  `id` int(10) UNSIGNED NOT NULL,
   `medication_id` int(10) UNSIGNED NOT NULL,
   `taken_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -86,7 +87,7 @@ ALTER TABLE `medications`
 -- Indices de la tabla `taken`
 --
 ALTER TABLE `taken`
-  ADD PRIMARY KEY (`medication_id`,`taken_at`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `users`
