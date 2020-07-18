@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-07-2020 a las 15:18:19
+-- Tiempo de generación: 18-07-2020 a las 12:16:48
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.2
 
@@ -21,10 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `mimedicacion`
 --
-CREATE DATABASE IF NOT EXISTS `mimedicacion` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `mimedicacion`;
-
-
 
 -- --------------------------------------------------------
 
@@ -38,6 +34,7 @@ CREATE TABLE `medications` (
   `name` varchar(200) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `hours_interval` tinyint(4) UNSIGNED NOT NULL,
+  `finished` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -72,6 +69,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
 --
 -- Índices para tablas volcadas
 --
@@ -87,7 +85,8 @@ ALTER TABLE `medications`
 -- Indices de la tabla `taken`
 --
 ALTER TABLE `taken`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_taken_med` (`medication_id`);
 
 --
 -- Indices de la tabla `users`
@@ -104,13 +103,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `medications`
 --
 ALTER TABLE `medications`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Restricciones para tablas volcadas

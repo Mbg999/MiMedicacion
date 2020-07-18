@@ -19,6 +19,7 @@ public class Medication {
     private String name;
     private String description;
     private int hours_interval;
+    private boolean finished;
     private Timestamp created_at;
     private Timestamp updated_at;
     
@@ -90,6 +91,14 @@ public class Medication {
         return created_at.toLocalDateTime();
     }
 
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+    
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }

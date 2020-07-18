@@ -24,7 +24,7 @@ public class MedicationDAOImpl implements MedicationDAO {
     private static final String ALLFROMAUSER = "SELECT * FROM medications WHERE user_id = ?";
     private static final String INSERT = "INSERT INTO medications(user_id, name, description, hours_interval) values(?,?,?,?)";
     private static final String UPDATE = "UPDATE medications "+
-            "SET name = ?, description = ?, hours_interval = ? WHERE id = ?";
+            "SET name = ?, description = ?, hours_interval = ?, finished = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM medications WHERE id = ?";
     
     // DB
@@ -55,6 +55,7 @@ public class MedicationDAOImpl implements MedicationDAO {
                 med.setName(rs.getString("name"));
                 med.setDescription(rs.getString("description"));
                 med.setHours_interval(rs.getInt("hours_interval"));
+                med.setFinished(rs.getBoolean("finished"));
                 med.setCreated_at(rs.getTimestamp("created_at"));
                 med.setUpdated_at(rs.getTimestamp("updated_at"));
             }
@@ -89,6 +90,7 @@ public class MedicationDAOImpl implements MedicationDAO {
                 med.setName(rs.getString("name"));
                 med.setDescription(rs.getString("description"));
                 med.setHours_interval(rs.getInt("hours_interval"));
+                med.setFinished(rs.getBoolean("finished"));
                 med.setCreated_at(rs.getTimestamp("created_at"));
                 med.setUpdated_at(rs.getTimestamp("updated_at"));
                 meds.add(med);
@@ -117,6 +119,7 @@ public class MedicationDAOImpl implements MedicationDAO {
                 med.setName(rs.getString("name"));
                 med.setDescription(rs.getString("description"));
                 med.setHours_interval(rs.getInt("hours_interval"));
+                med.setFinished(rs.getBoolean("finished"));
                 med.setCreated_at(rs.getTimestamp("created_at"));
                 med.setUpdated_at(rs.getTimestamp("updated_at"));
                 meds.add(med);
@@ -144,6 +147,7 @@ public class MedicationDAOImpl implements MedicationDAO {
             o.getName(),
             o.getDescription(),
             o.getHours_interval(),
+            o.isFinished(),
             o.getId()
         }) > 0;
     }

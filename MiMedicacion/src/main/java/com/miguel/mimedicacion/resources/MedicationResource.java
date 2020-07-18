@@ -213,7 +213,7 @@ public class MedicationResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@HeaderParam("Authorization") String token, @PathParam("id") int id,
             @FormParam("name") String name, @FormParam("description") String description,
-            @FormParam("hours_interval") int hours_interval){
+            @FormParam("hours_interval") int hours_interval, @FormParam("finished") Boolean finished){
         
         User user;
         Medication med = null;
@@ -259,6 +259,7 @@ public class MedicationResource {
         if(name != null) med.setName(name.trim());
         if(description != null) med.setDescription(description.trim());
         if(hours_interval > 0) med.setHours_interval(hours_interval);
+        if(finished != null) med.setFinished(finished);
         
         if(!mdi.update(med)){
             return Response
