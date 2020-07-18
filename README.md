@@ -18,4 +18,5 @@ Back-end: API Rest con Java web application y Maven
   <li>jjwt-jackson 0.11.2</li>
 </ul>
 
+documentación del servidor en javadocs: dentro de MiMedicacion/target/site/apidocs, https://github.com/Mbg999/MiMedicacion/tree/master/MiMedicacion/target/site/apidocs
 documentación de las rutas de la API: https://documenter.getpostman.com/view/4552748/T1DjjzaA?version=latest
