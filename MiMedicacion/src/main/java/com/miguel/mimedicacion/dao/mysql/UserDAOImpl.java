@@ -15,7 +15,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * DAO implementation, all the DB interactions for the user table
+ * 
+ * @author miguel
+ */
 public class UserDAOImpl implements UserDAO {
 
     // all the used SQL sentences
@@ -24,8 +28,9 @@ public class UserDAOImpl implements UserDAO {
     private static final String ALL = "SELECT * FROM users";
     private static final String INSERT = "INSERT INTO users(email, password, name, born_date) values(?,?,?,?)";
     private static final String UPDATE = "UPDATE users "+
-            "SET password = ?, name = ?, born_date = ?, picture = ?, mins_before = ? "+
+            "SET password = ?, name = ?, born_date = ?, mins_before = ? "+
             "WHERE id = ?";
+    private static final String UPDATEPICTURE = "UPDATE users SET picture = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM users WHERE id = ?";
     
     // DB
@@ -123,7 +128,7 @@ public class UserDAOImpl implements UserDAO {
     /**
      * Returns all the users
      * 
-     * @return List<User>
+     * @return List&lt;User&gt;
      */
     @Override
     public List<User> all() {
@@ -163,8 +168,9 @@ public class UserDAOImpl implements UserDAO {
 
     /**
      * Insert a new user and return the generated ID
+     * 
      * @param o User
-     * @return 
+     * @return int generated ID
      */
     @Override
     public int insert(User o) {
@@ -178,6 +184,7 @@ public class UserDAOImpl implements UserDAO {
 
     /**
      * Update a user and return if the user was updated or not
+     * 
      * @param o User
      * @return boolean
      */
@@ -187,14 +194,28 @@ public class UserDAOImpl implements UserDAO {
             o.getPassword(),
             o.getName(),
             o.getBorn_date(),
-            o.getPicture(),
             o.getMins_before(),
+            o.getId()
+        }) > 0;
+    }
+    
+    /**
+     * Update a user picture and return if was or not updated
+     * 
+     * @param o
+     * @return boolean
+     */
+    @Override
+    public boolean updatePicture(User o) {
+        return db.update(UPDATEPICTURE, new Object[]{
+            o.getPicture(),
             o.getId()
         }) > 0;
     }
 
     /**
      * Delete a user and return if the user was deleted or not
+     * 
      * @param o User
      * @return boolean
      */

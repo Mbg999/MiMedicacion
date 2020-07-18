@@ -11,6 +11,8 @@ import com.miguel.mimedicacion.jwtAuth.JwtAuth;
 import com.miguel.mimedicacion.models.User;
 import com.miguel.mimedicacion.responses.DataResponse;
 import com.miguel.mimedicacion.responses.TextResponse;
+import com.miguel.mimedicacion.utils.Upload;
+import java.io.InputStream;
 import java.time.DateTimeException;
 import java.util.HashMap;
 import java.util.List;
@@ -20,12 +22,15 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  * All the user routes
@@ -35,7 +40,7 @@ import javax.ws.rs.core.Response;
 @Path("users") // base name for user routes
 public class UserResource {
     
-    private UserDAOImpl udi;
+    private final UserDAOImpl udi;
     
     public UserResource(){
         this.udi = new UserDAOImpl();
@@ -43,6 +48,7 @@ public class UserResource {
     
     /**
      * Find by id
+     * 
      * @param id int
      * @return JSON response
      */
@@ -118,7 +124,6 @@ public class UserResource {
      * @param password String
      * @param name String
      * @param born_date String
-     * @param picture String
      * @param mins_before String
      * @return JSON Response
      */
@@ -127,7 +132,7 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@HeaderParam("Authorization") String token, @FormParam("password") String password,
             @FormParam("name") String name, @FormParam("born_date") String born_date,
-            @FormParam("picture") String picture, @FormParam("mins_before") int mins_before){
+            @FormParam("mins_before") int mins_before){
         
         User user;
         Map<String, String> errors = new HashMap();
@@ -176,10 +181,6 @@ public class UserResource {
             
         }
         
-        if(picture != null && !picture.trim().equals("")){
-            user.setPicture(picture);
-        }
-        
         if(mins_before > 0){
             if(mins_before > 255){
             errors.put("mins_before", "The maximum mins before value is 255");
@@ -212,7 +213,92 @@ public class UserResource {
     }
     
     /**
+     * Upload a new picture for the auth user
+     * 
+     * the old one will be deleted
+     * 
+     * @param token String, bearer token
+     * @param file InputStream
+     * @param fileDetails FormDataContentDisposition
+     * @return JSON response
+     */
+    @POST
+    @Path("picture")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response uploadPicture(@HeaderParam("Authorization") String token,
+            @FormDataParam("file") InputStream file,
+            @FormDataParam("file") FormDataContentDisposition fileDetails){
+        
+        User user;
+        Map<String, String> result;
+        String ext; // file extension
+        
+        // TOKEN VALIDATION
+        if(token == null || token.trim().equals("")){
+            return Response.status(Response.Status.UNAUTHORIZED).entity(new TextResponse(false, "Token required", 401)).build();
+        }
+        
+        user = JwtAuth.verifyAuth(token);
+        
+        if(user == null){
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .entity(new TextResponse(false, JwtAuth.UNAUTHORIZED, 401))
+                .build();
+        }
+        // /TOKEN VALIDATION
+        
+        // VALIDATE FILE
+        try {
+            ext = fileDetails.getFileName().substring(fileDetails.getFileName().lastIndexOf(".")).toLowerCase();
+        } catch (StringIndexOutOfBoundsException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(new TextResponse(false, "Invalid file name", 400)).build();
+        }
+        
+        if(!Upload.isAValidPictureExtension(ext)){
+            return Response.status(Response.Status.BAD_REQUEST).entity(new TextResponse(false, "Not a valid file extension", 400)).build();
+        }
+        // /VALIDATE FILE
+        
+        // DELETE OLD PICTURE
+        if(user.getPicture() != null && !Upload.deleteUserPicture(user.getPicture())){
+            return Response.status(Response.Status.BAD_REQUEST).entity(new TextResponse(false, "Error updating picture, try again", 500)).build();
+        }
+        // /DELETE OLD PICTURE
+        
+        // UPLOAD NEW PICTURE
+        result = Upload.userPicture(file, ext);
+        
+        if(result.get("error") != null){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new TextResponse(false, result.get("error"), 500)).build();
+        }
+        // /UPLOAD NEW PICTURE
+        
+        // UPDATE USER PICTURE
+        user.setPicture(result.get("picture"));
+        
+        if(!udi.updatePicture(user)){
+            return Response
+                .status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new TextResponse(false, "Error updating", 500))
+                .build();
+        }
+        // /UPDATE USER PICTURE
+        
+        // RETRIEVE AUTOGENERATED FIELDS AND RESPONSE
+        user = udi.first(user.getId());
+        user.setPassword(null); // don't give the password to the response
+        
+        return Response
+                .status(Response.Status.OK)
+                .entity(user)
+                .build();
+    }
+    
+    /**
      * Delete the auth user
+     * 
      * @param token String, jwt bearer token
      * @return JSON response
      */

@@ -16,7 +16,8 @@ import java.util.logging.Logger;
 
 
 /**
- *
+ * Interaction class with MySQL database
+ * 
  * @author miguel
  */
 public class DB {
@@ -50,10 +51,8 @@ public class DB {
      *  - ResultSet.CONCUR_UPDATABLE: ResultSet can be updated
      * 
      * @param query String
-     * @param scroll_type int
-     * @param read_type int
      * @return PreparedStatement
-     * @throws SQLException 
+     * @throws SQLException exception
      */
     public PreparedStatement getPreparedStatement(String query) throws SQLException{
         return this.conn.prepareStatement(query);
@@ -76,7 +75,7 @@ public class DB {
      * @param scroll_type int
      * @param read_type int
      * @return PreparedStatement
-     * @throws SQLException 
+     * @throws SQLException exception
      */
     public PreparedStatement getPreparedStatement(String query, int scroll_type, int read_type) throws SQLException{
         return this.conn.prepareStatement(query, scroll_type, read_type);
@@ -99,7 +98,7 @@ public class DB {
      * @param scroll_type int
      * @param read_type int
      * @return ResultSet
-     * @throws SQLException 
+     * @throws SQLException exception
      */
     public ResultSet statement(String query, int scroll_type, int read_type) throws SQLException{
         return conn.createStatement(scroll_type, read_type).executeQuery(query);
@@ -125,7 +124,7 @@ public class DB {
      * @param read_type int
      * @param bindings Object[]
      * @return ResultSet
-     * @throws SQLException 
+     * @throws SQLException exception
      */
     public ResultSet preparedStatement(String query, int scroll_type, int read_type, Object[] bindings) throws SQLException{
         PreparedStatement ps = conn.prepareStatement(query, scroll_type, read_type);
@@ -202,7 +201,7 @@ public class DB {
      * 
      * @param ps PreparedStatement
      * @param bindings Object[]
-     * @throws SQLException 
+     * @throws SQLException exception
      */
     private void addBindings(PreparedStatement ps, Object[] bindings) throws SQLException{
         for(int i = 0; i < bindings.length; i++){
@@ -216,7 +215,7 @@ public class DB {
      * @param query String
      * @param bindings Object[]
      * @return int
-     * @throws SQLException 
+     * @throws SQLException exception
      */
     private int executeUpdate(String query, Object[] bindings) throws SQLException{
         PreparedStatement ps = conn.prepareStatement(query);

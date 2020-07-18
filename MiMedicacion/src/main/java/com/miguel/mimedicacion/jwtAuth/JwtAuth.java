@@ -36,7 +36,7 @@ public class JwtAuth {
     public static User verifyAuth(String token){
         User user = null;
         Jws<Claims> jwt;
-        UserDAOImpl udi = null;
+        UserDAOImpl udi;
         
         try {
             jwt = Jwts.parserBuilder()
@@ -57,7 +57,7 @@ public class JwtAuth {
      * Generates a JWT token for a user
      * @param user User
      * @return String, the generated token
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException exception
      */
     public static String generateJWT(User user) throws UnsupportedEncodingException{
         return Jwts.builder()

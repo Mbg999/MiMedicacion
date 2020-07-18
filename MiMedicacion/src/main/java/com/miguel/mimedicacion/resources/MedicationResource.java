@@ -11,8 +11,6 @@ import com.miguel.mimedicacion.models.Medication;
 import com.miguel.mimedicacion.models.User;
 import com.miguel.mimedicacion.responses.DataResponse;
 import com.miguel.mimedicacion.responses.TextResponse;
-import java.time.DateTimeException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +34,7 @@ import javax.ws.rs.core.Response;
  */
 @Path("medications") // base name for medication routes
 public class MedicationResource {
-    private MedicationDAOImpl mdi;
+    private final MedicationDAOImpl mdi;
     
     public MedicationResource(){
         this.mdi = new MedicationDAOImpl();
@@ -44,6 +42,7 @@ public class MedicationResource {
     
     /**
      * Find by id
+     * 
      * @param id int
      * @return JSON response
      */
@@ -85,14 +84,15 @@ public class MedicationResource {
     }
     
     /**
-     * Get all the medications from the auth user
+     * Get all the medications of the auth user
      * 
+     * @param token String, bearer token
      * @return JSON response
      */
     @GET
     @Path("all/user")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response allFromAuthUser(@HeaderParam("Authorization") String token){
+    public Response allOfAuthUser(@HeaderParam("Authorization") String token){
         User user;
         List<Medication> meds;
         
@@ -111,7 +111,7 @@ public class MedicationResource {
         }
         // /TOKEN VALIDATION
         
-        meds = mdi.allFromAUser(user.getId());
+        meds = mdi.allOfAUser(user.getId());
         
         return Response
                 .status(Response.Status.OK)
@@ -120,15 +120,16 @@ public class MedicationResource {
     }
     
     /**
-     * Get all the medications from a user
+     * Get all the medications of a user
      * 
+     * @param id int
      * @return JSON response
      */
     @GET
     @Path("all/user/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response allFromAUser(@PathParam("id") int id){
-        List<Medication> meds = mdi.allFromAUser(id);
+    public Response allOfAUser(@PathParam("id") int id){
+        List<Medication> meds = mdi.allOfAUser(id);
         
         return Response
                 .status(Response.Status.OK)
@@ -185,7 +186,7 @@ public class MedicationResource {
         int id = mdi.insert(med);
         
         if(id < 1){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new TextResponse(false, "Failed inserting new user", 500)).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new TextResponse(false, "Failed inserting new medication", 500)).build();
         }
         // /STORING THE NEW MEDICATION
         
@@ -205,6 +206,7 @@ public class MedicationResource {
      * @param name String
      * @param description String
      * @param hours_interval int
+     * @param finished boolean
      * @return JSON response
      */
     @PUT
@@ -216,7 +218,7 @@ public class MedicationResource {
             @FormParam("hours_interval") int hours_interval, @FormParam("finished") Boolean finished){
         
         User user;
-        Medication med = null;
+        Medication med;
         Map<String, String> errors;
         
         // TOKEN VALIDATION
@@ -278,7 +280,9 @@ public class MedicationResource {
     
     /**
      * Delete the a medication
+     * 
      * @param token String, jwt bearer token
+     * @param id int
      * @return JSON response
      */
     @DELETE
@@ -329,6 +333,15 @@ public class MedicationResource {
                 .build();
     }
     
+    /**
+     * Validates a medication fields for a new medication
+     * 
+     * @param required boolean
+     * @param name String
+     * @param description String
+     * @param hours_interval int
+     * @return Map&lt;String, String&gt; errors
+     */
     private Map<String, String> validateMedication(boolean required, String name, String description, int hours_interval){
         Map<String, String> errors = new HashMap();
         
@@ -353,6 +366,14 @@ public class MedicationResource {
         return errors;
     }
     
+    /**
+     * Validates a medication fields for update a medication
+     * 
+     * @param name String
+     * @param description String
+     * @param hours_interval int
+     * @return Map&lt;String, String&gt; errors
+     */
     private Map<String, String> validateMedication(String name, String description, int hours_interval){
         Map<String, String> errors = new HashMap();
         

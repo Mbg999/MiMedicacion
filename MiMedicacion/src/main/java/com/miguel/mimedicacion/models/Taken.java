@@ -21,6 +21,10 @@ public class Taken {
     // constructors
     public Taken(){}
     
+    public Taken(int medication_id){
+        this.medication_id = medication_id;
+    }
+    
     public Taken(int medication_id, Timestamp taken_at){
         this.medication_id = medication_id;
         this.taken_at = taken_at;

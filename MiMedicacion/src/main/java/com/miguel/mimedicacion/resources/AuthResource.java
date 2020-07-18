@@ -12,9 +12,7 @@ import com.miguel.mimedicacion.responses.UserResponse;
 import com.miguel.mimedicacion.responses.TextResponse;
 import java.io.UnsupportedEncodingException;
 import java.time.DateTimeException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -33,7 +31,7 @@ import javax.ws.rs.core.Response;
 @Path("auth") // base name for auth routes
 public class AuthResource {
     
-    private UserDAOImpl udi;
+    private final UserDAOImpl udi;
     
     public AuthResource(){
         this.udi = new UserDAOImpl();
@@ -52,7 +50,7 @@ public class AuthResource {
     @Path("login")
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@FormParam("email") String email, @FormParam("password") String password){
-        User user = null;
+        User user;
         Map<String, String> errors = new HashMap();
         
         // DATA VALIDATION
@@ -101,14 +99,14 @@ public class AuthResource {
      * @param password String
      * @param name String
      * @param born_date String, date yyyy-MM-dd
-     * @return 
+     * @return JSON response
      */
     @POST()
     @Path("register")
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(@FormParam("email") String email, @FormParam("password") String password,
             @FormParam("name") String name, @FormParam("born_date") String born_date){
-        User user = null;
+        User user;
         Map<String, String> errors = new HashMap();
         
         // DATA VALIDATION
@@ -189,7 +187,7 @@ public class AuthResource {
     @Path("me")
     @Produces(MediaType.APPLICATION_JSON)
     public Response me(@HeaderParam("Authorization") String token){
-        User user = null;
+        User user;
         
         // TOKEN VALIDATION
         if(token == null || token.trim().equals("")){

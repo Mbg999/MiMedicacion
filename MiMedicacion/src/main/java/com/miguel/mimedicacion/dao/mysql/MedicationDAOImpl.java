@@ -15,13 +15,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * DAO implementation, all the DB interactions for the medication table
+ * 
+ * @author miguel
+ */
 public class MedicationDAOImpl implements MedicationDAO {
     
     // all the used SQL sentences
     private static final String FIRST = "SELECT * FROM medications WHERE id = ?";
     private static final String ALL = "SELECT * FROM medications";
-    private static final String ALLFROMAUSER = "SELECT * FROM medications WHERE user_id = ?";
+    private static final String ALL_OF_A_USER = "SELECT * FROM medications WHERE user_id = ?";
     private static final String INSERT = "INSERT INTO medications(user_id, name, description, hours_interval) values(?,?,?,?)";
     private static final String UPDATE = "UPDATE medications "+
             "SET name = ?, description = ?, hours_interval = ?, finished = ? WHERE id = ?";
@@ -38,7 +42,12 @@ public class MedicationDAOImpl implements MedicationDAO {
         }
     }
 
-
+    /**
+     * Returns the first medication found by id, or null
+     * 
+     * @param id Integer
+     * @return Medication | null
+     */
     @Override
     public Medication first(Integer id) {
         ResultSet rs = null;
@@ -74,10 +83,15 @@ public class MedicationDAOImpl implements MedicationDAO {
         return med;
     }
 
+    /**
+     * Returns all the medications
+     * 
+     * @return List&lt;Medication&gt;
+     */
     @Override
     public List<Medication> all() {
         ResultSet rs = null;
-        Medication med = null;
+        Medication med;
         List<Medication> meds = new ArrayList();
         
         try {
@@ -97,19 +111,33 @@ public class MedicationDAOImpl implements MedicationDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
         
         return meds;
     }
     
+    /**
+     * Returns all the medications of a user
+     * 
+     * @param id int
+     * @return List&lt;Medication&gt;
+     */
     @Override
-    public List<Medication> allFromAUser(int id) {
+    public List<Medication> allOfAUser(int id) {
         ResultSet rs = null;
         Medication med = null;
         List<Medication> meds = new ArrayList();
         
         try {
-            rs = db.preparedStatement(ALLFROMAUSER, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
+            rs = db.preparedStatement(ALL_OF_A_USER, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
                     new Object[]{id});
             
             while(rs.next()){
@@ -126,11 +154,25 @@ public class MedicationDAOImpl implements MedicationDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
         
         return meds;
     }
 
+    /**
+     * Insert a new medication and return the generated ID
+     * 
+     * @param o Medication
+     * @return int
+     */
     @Override
     public int insert(Medication o) {
         return this.db.insert(INSERT, new Object[]{
@@ -141,6 +183,12 @@ public class MedicationDAOImpl implements MedicationDAO {
         });
     }
 
+    /**
+     * Update a medication and return if the medication was updated or not
+     * 
+     * @param o Medication
+     * @return boolean
+     */
     @Override
     public boolean update(Medication o) {
         return this.db.update(UPDATE, new Object[]{
@@ -152,6 +200,12 @@ public class MedicationDAOImpl implements MedicationDAO {
         }) > 0;
     }
 
+    /**
+     * Delete a medication and return if the medication was deleted or not
+     * 
+     * @param o Medication
+     * @return boolean
+     */
     @Override
     public boolean delete(Medication o) {
         return this.db.delete(DELETE, new Object[]{

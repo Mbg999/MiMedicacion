@@ -1,0 +1,9 @@
+com.miguel.mimedicacion
+com.miguel.mimedicacion.config
+com.miguel.mimedicacion.dao
+com.miguel.mimedicacion.dao.mysql
+com.miguel.mimedicacion.jwtAuth
+com.miguel.mimedicacion.models
+com.miguel.mimedicacion.resources
+com.miguel.mimedicacion.responses
+com.miguel.mimedicacion.utils

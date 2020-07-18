@@ -22,9 +22,9 @@ public class CorsFilter implements ContainerResponseFilter {
      * CORS middleware filter, it works lonely, don't have to use anywhere,
      * the discover will get this
      * 
-     * @param requestContext
-     * @param responseContext
-     * @throws IOException 
+     * @param requestContext request
+     * @param responseContext response
+     * @throws IOException exception
      */
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {

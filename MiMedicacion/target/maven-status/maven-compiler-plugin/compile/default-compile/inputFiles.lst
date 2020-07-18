@@ -1,6 +1,9 @@
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\TakenResource.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\AuthResource.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\mysql\TakenDAOImpl.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\jwtAuth\JwtAuth.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\MedicationResource.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\utils\Upload.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\mysql\UserDAOImpl.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\Taken.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\DAO.java
@@ -13,6 +16,7 @@ C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mime
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\Medication.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\DataResponse.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\config\DB.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\TakenDAO.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\TextResponse.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\UserResponse.java
 C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\User.java

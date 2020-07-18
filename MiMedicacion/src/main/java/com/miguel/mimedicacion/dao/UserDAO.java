@@ -13,4 +13,5 @@ import com.miguel.mimedicacion.models.User;
  */
 public interface UserDAO extends DAO<User, Integer>{
     User firstByEmail(String email);
+    boolean updatePicture(User o);
 }

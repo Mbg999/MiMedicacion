@@ -87,8 +87,9 @@ public class User {
      * Simple md5 hex encription algorithm
      * 
      * https://stackoverflow.com/a/14201817
-     * @param password 
-     * @return  String
+     * 
+     * @param password String
+     * @return String hashed password
      */
     public static String hashPassword(String password){
         try {
@@ -109,8 +110,9 @@ public class User {
     
     /**
      * Check if the user password and the param one is the same
-     * @param password
-     * @return 
+     * 
+     * @param password String
+     * @return boolean
      */
     public boolean checkPassword(String password){
         return this.password.equals(User.hashPassword(password));
@@ -134,6 +136,7 @@ public class User {
     
     /**
      * Made for set a String as java.mysql.Date to born_date
+     * 
      * @param born_date String
      */
     public void setNewBorn_date(String born_date){
@@ -150,8 +153,8 @@ public class User {
     /**
      * Check if the user is older than 18 years old
      * 
-     * @param born_date
-     * @return 
+     * @param born_date String
+     * @return boolean
      */
     public static boolean isOlderThan18(String born_date) throws DateTimeException{
         String[] d = born_date.replace("/", "-").split("-");
