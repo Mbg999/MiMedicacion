@@ -20,3 +20,5 @@ Back-end: API Rest con Java web application y Maven
 
 <p>documentación del servidor en javadocs: dentro de MiMedicacion/target/site/apidocs, https://github.com/Mbg999/MiMedicacion/tree/master/MiMedicacion/target/site/apidocs</p>
 <p>documentación de las rutas de la API: https://documenter.getpostman.com/view/4552748/T1DjjzaA?version=latest</p>
+
+<p>no olvides crear el árbol de directorios C:\MiMedicacionAssets\users\pictures o modificar el path al que tu prefieras desde MiMedicacion/target/classes/com/miguel/mimedicacion/utils/Upload</p>
