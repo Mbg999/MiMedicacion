@@ -6,7 +6,7 @@ Aplicacion con usuarios, que sirve para que el usuario guarde su medicación y l
 
 BD: MySQL
 
-Back-end: Java web application con Maven
+Back-end: API Rest con Java web application y Maven
 <ul>
   <li>jersey-core 2.31</li>
   <li>mysql-connector-java 8.0.21</li>
