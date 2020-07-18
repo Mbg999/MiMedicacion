@@ -37,7 +37,7 @@ CREATE TABLE `medications` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(200) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
-  `hours_interval` tinyint(4) NOT NULL,
+  `hours_interval` tinyint(4) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -67,7 +67,7 @@ CREATE TABLE `users` (
   `name` varchar(200) NOT NULL,
   `born_date` date NOT NULL,
   `picture` varchar(100) DEFAULT NULL,
-  `mins_before` tinyint(4) NOT NULL DEFAULT 5,
+  `mins_before` tinyint(4) UNSIGNED NOT NULL DEFAULT 5,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
