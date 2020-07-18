@@ -14,6 +14,7 @@ public class TextResponse {
     private boolean ok;
     private String message;
     private int status;
+    private Object errors;
     
     public TextResponse(){}
     
@@ -21,6 +22,13 @@ public class TextResponse {
         this.ok = ok;
         this.message = message;
         this.status = status;
+    }
+    
+    public TextResponse(boolean ok, String message, int status, Object errors){
+        this.ok = ok;
+        this.message = message;
+        this.status = status;
+        this.errors = errors;
     }
 
     public boolean isOk() {
@@ -45,5 +53,13 @@ public class TextResponse {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Object getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Object errors) {
+        this.errors = errors;
     }
 }

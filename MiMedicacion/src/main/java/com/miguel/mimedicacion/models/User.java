@@ -11,8 +11,9 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +32,6 @@ public class User {
     private int mins_before;
     private Timestamp created_at;
     private Timestamp updated_at;
-    private List<Medication> medications;
 
     // constructors
     public User(){}
@@ -124,8 +124,8 @@ public class User {
         this.name = name;
     }
 
-    public Date getBorn_date() {
-        return born_date;
+    public LocalDate getBorn_date() {
+        return born_date.toLocalDate();
     }
 
     public void setBorn_date(Date born_date) {
@@ -153,7 +153,7 @@ public class User {
      * @param born_date
      * @return 
      */
-    public static boolean isOlderThan18(String born_date){
+    public static boolean isOlderThan18(String born_date) throws DateTimeException{
         String[] d = born_date.replace("/", "-").split("-");
         LocalDate bd = LocalDate.of(Integer.parseInt(d[0]), Integer.parseInt(d[1]), Integer.parseInt(d[2]));
         LocalDate today = LocalDate.now();
@@ -177,27 +177,19 @@ public class User {
         this.mins_before = mins_before;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreated_at() {
+        return created_at.toLocalDateTime();
     }
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
 
-    public Timestamp getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdated_at() {
+        return updated_at.toLocalDateTime();
     }
 
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
-    }
-
-    public List<Medication> getMedications() {
-        return medications;
-    }
-
-    public void setMedications(List<Medication> medications) {
-        this.medications = medications;
     }
 }

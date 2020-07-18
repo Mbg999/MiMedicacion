@@ -1,16 +1,18 @@
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\AuthResource.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\jwtAuth\JwtAuth.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\UserResponse.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\config\CorsFilter.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\User.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\TextResponse.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\JAXRSConfiguration.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\Medication.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\DataResponse.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\config\DB.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\mysql\UserDAOImpl.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\UserResource.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\Taken.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\JavaEE8Resource.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\UserDAO.java
-C:\Users\miguel\Desktop\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\DAO.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\AuthResource.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\jwtAuth\JwtAuth.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\MedicationResource.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\mysql\UserDAOImpl.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\Taken.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\DAO.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\mysql\MedicationDAOImpl.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\UserDAO.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\JAXRSConfiguration.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\resources\UserResource.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\dao\MedicationDAO.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\config\CorsFilter.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\Medication.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\DataResponse.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\config\DB.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\TextResponse.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\responses\UserResponse.java
+C:\Users\miguel\Desktop\mi medicacion\MiMedicacion\src\main\java\com\miguel\mimedicacion\models\User.java

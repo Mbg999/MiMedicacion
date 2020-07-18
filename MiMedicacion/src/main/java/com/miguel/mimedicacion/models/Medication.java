@@ -6,7 +6,7 @@
 package com.miguel.mimedicacion.models;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -21,11 +21,17 @@ public class Medication {
     private int hours_interval;
     private Timestamp created_at;
     private Timestamp updated_at;
-    private User user;
-    private List<Taken> taken;
     
     // constructors
     public Medication(){}
+    
+    public Medication(int user_id, String name,
+            String description, int hours_interval){
+        this.user_id = user_id;
+        this.name = name;
+        this.description = description;
+        this.hours_interval = hours_interval;
+    }
     
     public Medication(int id, int user_id, String name,
             String description, int hours_interval,
@@ -80,35 +86,19 @@ public class Medication {
         this.hours_interval = hours_interval;
     }
 
-    public Timestamp getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreated_at() {
+        return created_at.toLocalDateTime();
     }
 
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
 
-    public Timestamp getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdated_at() {
+        return updated_at.toLocalDateTime();
     }
 
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Taken> getTaken() {
-        return taken;
-    }
-
-    public void setTaken(List<Taken> taken) {
-        this.taken = taken;
     }
 }

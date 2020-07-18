@@ -6,6 +6,7 @@
 package com.miguel.mimedicacion.models;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -16,7 +17,6 @@ public class Taken {
     private int id;
     private int medication_id;
     private Timestamp taken_at;
-    private Medication medication;
     
     // constructors
     public Taken(){}
@@ -43,19 +43,11 @@ public class Taken {
         this.medication_id = medication_id;
     }
 
-    public Timestamp getTaken_at() {
-        return taken_at;
+    public LocalDateTime getTaken_at() {
+        return taken_at.toLocalDateTime();
     }
 
     public void setTaken_at(Timestamp taken_at) {
         this.taken_at = taken_at;
-    }
-    
-    public Medication getMedication() {
-        return medication;
-    }
-
-    public void setMedication(Medication medication) {
-        this.medication = medication;
     }
 }

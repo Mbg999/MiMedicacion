@@ -19,7 +19,8 @@ import javax.ws.rs.ext.Provider;
 public class CorsFilter implements ContainerResponseFilter {
 
     /**
-     * CORS middleware filter, it works lonely, don't have to use anywhere
+     * CORS middleware filter, it works lonely, don't have to use anywhere,
+     * the discover will get this
      * 
      * @param requestContext
      * @param responseContext
