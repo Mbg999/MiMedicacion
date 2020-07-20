@@ -152,7 +152,7 @@ public class MedicationResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response store(@HeaderParam("Authorization") String token, @FormParam("name") String name,
-            @FormParam("description") String description, @FormParam("hours_interval") int hours_interval){
+            @FormParam("description") String description, @FormParam("hours_interval") Integer hours_interval){
         User user;
         Medication med;
         Map<String, String> errors;
@@ -342,7 +342,7 @@ public class MedicationResource {
      * @param hours_interval int
      * @return Map&lt;String, String&gt; errors
      */
-    private Map<String, String> validateMedication(boolean required, String name, String description, int hours_interval){
+    private Map<String, String> validateMedication(boolean required, String name, String description, Integer hours_interval){
         Map<String, String> errors = new HashMap();
         
         if(name == null || name.trim().equals("")){
@@ -351,13 +351,11 @@ public class MedicationResource {
             errors.put("name", "The maximum name length is 200");
         }
         
-        if(description == null || description.trim().equals("")){
-            errors.put("description", "The description is required");
-        } else if(description.length() > 1000){
+        if(description == null && description.length() > 1000){
             errors.put("description", "The maximum description length is 1000");
         }
         
-        if(hours_interval < 1){
+        if(hours_interval == null || hours_interval < 0){
             errors.put("hours_interval", "The hours interval is required");
         } else if(hours_interval > 255){
             errors.put("hours_interval", "The maximum hours interval value is 255");
@@ -374,7 +372,7 @@ public class MedicationResource {
      * @param hours_interval int
      * @return Map&lt;String, String&gt; errors
      */
-    private Map<String, String> validateMedication(String name, String description, int hours_interval){
+    private Map<String, String> validateMedication(String name, String description, Integer hours_interval){
         Map<String, String> errors = new HashMap();
         
         if(name != null && name.length() > 200){
@@ -385,7 +383,9 @@ public class MedicationResource {
             errors.put("description", "The maximum description length is 1000");
         }
         
-        if(hours_interval > 0 && hours_interval > 255){
+        if(hours_interval < 0){
+            errors.put("hours_interval", "The minimum hours interval value is 0");
+        } else if(hours_interval > 255){
             errors.put("hours_interval", "The maximum hours interval value is 255");
         }
         

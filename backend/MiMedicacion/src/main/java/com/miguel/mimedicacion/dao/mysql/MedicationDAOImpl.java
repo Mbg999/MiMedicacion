@@ -25,7 +25,7 @@ public class MedicationDAOImpl implements MedicationDAO {
     // all the used SQL sentences
     private static final String FIRST = "SELECT * FROM medications WHERE id = ?";
     private static final String ALL = "SELECT * FROM medications";
-    private static final String ALL_OF_A_USER = "SELECT * FROM medications WHERE user_id = ?";
+    private static final String ALL_OF_A_USER = "SELECT * FROM medications WHERE user_id = ? ORDER BY created_at DESC, finished ASC";
     private static final String INSERT = "INSERT INTO medications(user_id, name, description, hours_interval) values(?,?,?,?)";
     private static final String UPDATE = "UPDATE medications "+
             "SET name = ?, description = ?, hours_interval = ?, finished = ? WHERE id = ?";
@@ -33,10 +33,12 @@ public class MedicationDAOImpl implements MedicationDAO {
     
     // DB
     private DB db;
+    private TakenDAOImpl tdi;
     
     public MedicationDAOImpl(){
         try {
             db = new DB();
+            tdi = new TakenDAOImpl();
         } catch (SQLException ex) {
             Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,6 +69,7 @@ public class MedicationDAOImpl implements MedicationDAO {
                 med.setFinished(rs.getBoolean("finished"));
                 med.setCreated_at(rs.getTimestamp("created_at"));
                 med.setUpdated_at(rs.getTimestamp("updated_at"));
+                med.setLast_taken(this.tdi.lastOfAMedication(id));
             }
         } catch (SQLException ex) {
             Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,6 +110,7 @@ public class MedicationDAOImpl implements MedicationDAO {
                 med.setFinished(rs.getBoolean("finished"));
                 med.setCreated_at(rs.getTimestamp("created_at"));
                 med.setUpdated_at(rs.getTimestamp("updated_at"));
+                med.setLast_taken(this.tdi.lastOfAMedication(med.getId()));
                 meds.add(med);
             }
         } catch (SQLException ex) {
@@ -133,7 +137,7 @@ public class MedicationDAOImpl implements MedicationDAO {
     @Override
     public List<Medication> allOfAUser(int id) {
         ResultSet rs = null;
-        Medication med = null;
+        Medication med;
         List<Medication> meds = new ArrayList();
         
         try {
@@ -150,6 +154,7 @@ public class MedicationDAOImpl implements MedicationDAO {
                 med.setFinished(rs.getBoolean("finished"));
                 med.setCreated_at(rs.getTimestamp("created_at"));
                 med.setUpdated_at(rs.getTimestamp("updated_at"));
+                med.setLast_taken(this.tdi.lastOfAMedication(med.getId()));
                 meds.add(med);
             }
         } catch (SQLException ex) {

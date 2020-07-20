@@ -24,8 +24,9 @@ public class TakenDAOImpl implements TakenDAO {
 
     // all the used SQL sentences
     private static final String FIRST = "SELECT * FROM taken WHERE id = ?";
+    private static final String LAST_OF_A_MEDICATION = "SELECT * FROM taken WHERE medication_id = ? ORDER BY taken_at DESC LIMIT 1";
     private static final String ALL = "SELECT * FROM taken";
-    private static final String ALL_OF_A_MEDICATION = "SELECT * FROM taken WHERE medication_id = ?";
+    private static final String ALL_OF_A_MEDICATION = "SELECT * FROM taken WHERE medication_id = ? ORDER BY taken_at DESC";
     private static final String INSERT = "INSERT INTO taken(medication_id) values(?)";
     private static final String DELETE = "DELETE FROM taken WHERE id = ?";
     
@@ -41,7 +42,7 @@ public class TakenDAOImpl implements TakenDAO {
     }
     
     /**
-     * Returns the first taken found by email, or null
+     * Returns the first taken found by id, or null
      * 
      * @param id Integer
      * @return Taken | null
@@ -53,6 +54,36 @@ public class TakenDAOImpl implements TakenDAO {
         
         try {
             rs = db.preparedStatement(FIRST, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
+                    new Object[]{id});
+            
+            if(rs.next()){
+                taken = new Taken();
+                taken.setId(rs.getInt("id"));
+                taken.setMedication_id(rs.getInt("medication_id"));
+                taken.setTaken_at(rs.getTimestamp("taken_at"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TakenDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        return taken;
+    }
+    
+   @Override
+    public Taken lastOfAMedication(int id) {
+        Taken taken = null;
+        ResultSet rs = null;
+        
+        try {
+            rs = db.preparedStatement(LAST_OF_A_MEDICATION, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
                     new Object[]{id});
             
             if(rs.next()){

@@ -12,16 +12,12 @@ import com.miguel.mimedicacion.models.User;
 import com.miguel.mimedicacion.responses.DataResponse;
 import com.miguel.mimedicacion.responses.TextResponse;
 import com.miguel.mimedicacion.utils.Upload;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.time.DateTimeException;
 import java.util.HashMap;
 import java.util.List;
@@ -393,6 +389,13 @@ public class UserResource {
                 .build();
         }
         // /TOKEN VALIDATION
+        
+        // DELETE USER PICTURE FROM STORAGE
+        if(user.getPicture() != null){
+            File file = new File(Upload.FILES_PATH + Upload.USER_PICTURES_PATH + user.getPicture());
+            file.delete();
+        }
+        // /DELETE USER PICTURE FROM STORAGE
         
         // DELETE + RESPONSE
         if(!udi.delete(user)){

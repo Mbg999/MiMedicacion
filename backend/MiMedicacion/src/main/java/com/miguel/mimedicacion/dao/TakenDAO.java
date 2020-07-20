@@ -13,5 +13,6 @@ import java.util.List;
  * @author miguel
  */
 public interface TakenDAO extends DAO<Taken, Integer> {
+    Taken lastOfAMedication(int id);
     List<Taken> allOfAMedication(int id);
 }

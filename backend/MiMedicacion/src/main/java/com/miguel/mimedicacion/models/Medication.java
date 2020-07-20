@@ -22,6 +22,7 @@ public class Medication {
     private boolean finished;
     private Timestamp created_at;
     private Timestamp updated_at;
+    private Taken last_taken;
     
     // constructors
     public Medication(){}
@@ -110,4 +111,14 @@ public class Medication {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
+
+    public Taken getLast_taken() {
+        return last_taken;
+    }
+
+    public void setLast_taken(Taken last_taken) {
+        this.last_taken = last_taken;
+    }
+    
+    
 }
