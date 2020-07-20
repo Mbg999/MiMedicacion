@@ -25,10 +25,10 @@ import java.nio.file.Path;
  */
 public class Upload {
 
-    private static final String VALID_PICTURE_EXTENSIONS[] = {".png", ".jpg"};
+    private static final String VALID_PICTURE_EXTENSIONS[] = {".png", ".jpg", "jpeg"};
     // don't forget to create these folders before using this app
-    private static final String FILES_PATH = "C:" + File.separator + "MiMedicacionAssets" + File.separator;
-    private static final String USER_PICTURES_PATH = "users" + File.separator + "pictures" + File.separator;
+    public static final String FILES_PATH = "C:" + File.separator + "MiMedicacionAssets" + File.separator;
+    public static final String USER_PICTURES_PATH = "users" + File.separator + "pictures" + File.separator;
 
     /**
      * Upload a user picture

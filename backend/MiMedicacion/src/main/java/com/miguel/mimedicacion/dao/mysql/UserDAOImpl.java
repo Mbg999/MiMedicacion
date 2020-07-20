@@ -30,6 +30,9 @@ public class UserDAOImpl implements UserDAO {
     private static final String UPDATE = "UPDATE users "+
             "SET password = ?, name = ?, born_date = ?, mins_before = ? "+
             "WHERE id = ?";
+    private static final String UPDATE_NOT_PASSWORD = "UPDATE users "+
+            "SET name = ?, born_date = ?, mins_before = ? "+
+            "WHERE id = ?";
     private static final String UPDATEPICTURE = "UPDATE users SET picture = ? WHERE id = ?";
     private static final String DELETE = "DELETE FROM users WHERE id = ?";
     
@@ -190,13 +193,21 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public boolean update(User o) {
-        return db.update(UPDATE, new Object[]{
-            o.getPassword(),
-            o.getName(),
-            o.getBorn_date(),
-            o.getMins_before(),
-            o.getId()
-        }) > 0;
+        if(o.getPassword() != null){
+            return db.update(UPDATE, new Object[]{
+                o.getPassword(),
+                o.getName(),
+                o.getBorn_date(),
+                o.getMins_before(),
+                o.getId()
+            }) > 0;
+        }
+        return db.update(UPDATE_NOT_PASSWORD, new Object[]{
+                o.getName(),
+                o.getBorn_date(),
+                o.getMins_before(),
+                o.getId()
+            }) > 0;
     }
     
     /**

@@ -12,11 +12,23 @@ import com.miguel.mimedicacion.models.User;
 import com.miguel.mimedicacion.responses.DataResponse;
 import com.miguel.mimedicacion.responses.TextResponse;
 import com.miguel.mimedicacion.utils.Upload;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.DateTimeException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -132,7 +144,7 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@HeaderParam("Authorization") String token, @FormParam("password") String password,
             @FormParam("name") String name, @FormParam("born_date") String born_date,
-            @FormParam("mins_before") int mins_before){
+            @FormParam("mins_before") Integer mins_before){
         
         User user;
         Map<String, String> errors = new HashMap();
@@ -181,7 +193,7 @@ public class UserResource {
             
         }
         
-        if(mins_before > 0){
+        if(mins_before != null && mins_before > -1){
             if(mins_before > 255){
             errors.put("mins_before", "The maximum mins before value is 255");
             } else {
@@ -213,6 +225,66 @@ public class UserResource {
     }
     
     /**
+     * Returns a user picture, this should be an application web server work
+     * 
+     * only auth users can get pictures
+     * 
+     * @param picture String
+     * @param token String, bearer token
+     * @return image/png | image/jpg | image/jpeg
+     */
+    @GET
+    @Path("picture/{picture}/{authorization}")
+    @Produces({"image/png", "image/jpg", "image/jpeg"})
+    public Response getFullImage(@PathParam("picture") String picture,
+            @PathParam("authorization") String token) {
+        
+        User user;
+        File file;
+        BufferedImage image = null;
+        ByteArrayOutputStream baos;
+        String ext = null;
+        
+        // TOKEN VALIDATION
+        if(token == null || token.trim().equals("")){
+            return Response.status(Response.Status.UNAUTHORIZED).entity(new TextResponse(false, "Token required", 401)).build();
+        }
+        
+        user = JwtAuth.verifyAuth(token);
+        
+        if(user == null){
+            return Response
+                .status(Response.Status.NOT_FOUND)
+                .entity(new TextResponse(false, JwtAuth.UNAUTHORIZED, 401))
+                .build();
+        }
+        // /TOKEN VALIDATION
+        file = new File(Upload.FILES_PATH + Upload.USER_PICTURES_PATH + picture);
+        baos = new ByteArrayOutputStream();
+        
+        try {
+            image = ImageIO.read(file);
+            ext = file.getName().substring(file.getName().lastIndexOf(".")+1).toLowerCase();
+            ImageIO.write(image, ext, baos);
+        } catch (IOException ex) {
+            try {
+                file = new File(Upload.FILES_PATH + Upload.USER_PICTURES_PATH + "nopicture.png");
+                image = ImageIO.read(file);
+                ext = "png";
+                ImageIO.write(image, ext, baos);
+            } catch (IOException ex1) {
+                Logger.getLogger(UserResource.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+        
+        byte[] imageData = baos.toByteArray();
+        // uncomment line below to send non-streamed
+        // return Response.ok(imageData).build();
+        // uncomment line below to send streamed
+         return Response.ok(new ByteArrayInputStream(imageData)).build();
+    }
+    
+    /**
      * Upload a new picture for the auth user
      * 
      * the old one will be deleted
@@ -227,8 +299,8 @@ public class UserResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response uploadPicture(@HeaderParam("Authorization") String token,
-            @FormDataParam("file") InputStream file,
-            @FormDataParam("file") FormDataContentDisposition fileDetails){
+            @FormDataParam("picture") InputStream file,
+            @FormDataParam("picture") FormDataContentDisposition fileDetails){
         
         User user;
         Map<String, String> result;
@@ -292,7 +364,7 @@ public class UserResource {
         
         return Response
                 .status(Response.Status.OK)
-                .entity(user)
+                .entity(new DataResponse(user))
                 .build();
     }
     

@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.DateTimeException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -48,6 +49,7 @@ public class AuthResource {
      */
     @POST()
     @Path("login")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@FormParam("email") String email, @FormParam("password") String password){
         User user;
@@ -71,13 +73,15 @@ public class AuthResource {
         user = udi.firstByEmail(email.trim().toLowerCase());
         
         if(user == null){
-            return Response.status(Response.Status.NOT_FOUND).entity(new TextResponse(false, "The user does not exists", 404)).build();
+            errors.put("email", "The user does not exists");
+            return Response.status(Response.Status.NOT_FOUND).entity(new TextResponse(false, "Invalid user data", 404, errors)).build();
         }
         // /CHECK IF THE USER EXISTS
         
         // CHECK IF THE PASSWORD IS OK
         if(!user.checkPassword(password)){
-            return Response.status(Response.Status.BAD_REQUEST).entity(new TextResponse(false, "Incorrect password", 400)).build();
+            errors.put("password", "Incorrect password");
+            return Response.status(Response.Status.BAD_REQUEST).entity(new TextResponse(false, "Invalid user data", 400, errors)).build();
         }
         
         // GIVE THE JWT AND USER DATA AS RESPONSE
@@ -103,6 +107,7 @@ public class AuthResource {
      */
     @POST()
     @Path("register")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(@FormParam("email") String email, @FormParam("password") String password,
             @FormParam("name") String name, @FormParam("born_date") String born_date){
@@ -141,7 +146,7 @@ public class AuthResource {
         }
         
         if(errors.size() > 0){
-            return Response.status(Response.Status.UNAUTHORIZED).entity(new TextResponse(false, "Invalid user data", 400, errors)).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(new TextResponse(false, "Invalid user data fields", 400, errors)).build();
         }
         // /DATA VALIDATION
         
@@ -149,7 +154,8 @@ public class AuthResource {
         user = udi.firstByEmail(email);
         
         if(user != null){
-            return Response.status(Response.Status.BAD_REQUEST).entity(new TextResponse(false, "Taken email", 400)).build();
+            errors.put("email", "Taken email");
+            return Response.status(Response.Status.BAD_REQUEST).entity(new TextResponse(false, "Invalid user data fields", 400, errors)).build();
         }
         // /CHECK IF THE EMAIL IS TAKEN
         
