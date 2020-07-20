@@ -1,0 +1,8 @@
+b {
+    -moz-user-select: none;
+    user-select: none;
+}
+
+b:hover {
+    cursor: pointer;
+}

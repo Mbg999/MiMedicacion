@@ -1,0 +1,11 @@
+<header>
+    <nav *ngIf="user">
+        <app-navbar></app-navbar>
+    </nav>
+</header>
+<main class="container">
+    <router-outlet></router-outlet>
+</main>
+<footer>
+    <app-footer></app-footer>
+</footer>

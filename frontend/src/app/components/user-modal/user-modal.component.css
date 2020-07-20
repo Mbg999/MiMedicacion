@@ -1,0 +1,6 @@
+.pictureDiv {
+    max-width: 350px;
+    min-width: 200px;
+    width: 100%;
+    cursor: pointer;
+}

@@ -1,0 +1,107 @@
+<form novalidate [formGroup]="registerForm" (submit)="register()">
+    <!-- EMAIL -->
+    <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="mdi mdi-account"></span>
+                </span>
+            </div>
+            <input type="text" id="email" formControlName="email" class="form-control"
+            [ngClass]="{'is-valid':email.valid && (email.dirty || email.touched),
+            'is-invalid': (email.invalid || takenEmail) && (email.dirty || email.touched)}"
+            placeholder="usuario@mail.com">
+        </div>
+        <div class="alert alert-danger" *ngIf="takenEmail">{{ takenEmail }}</div>
+        <form-error-messages [control]="email"></form-error-messages>
+    </div>
+    <!-- /EMAIL -->
+    <!-- PASSWORD -->
+    <div class="form-group">
+        <label for="password">Contraseña</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="mdi mdi-lock"></span>
+                </span>
+            </div>
+            <input type="password" id="password" formControlName="password" class="form-control"
+            [ngClass]="{'is-valid':password.valid && (password.dirty || password.touched),
+            'is-invalid': password.invalid && (password.dirty || password.touched)}"
+            placeholder="••••••">
+        </div>
+        <form-error-messages [control]="password"></form-error-messages>
+    </div>
+    <!-- /PASSWORD -->
+    <!-- PASSWORD_CONFIRMATION -->
+    <div class="form-group">
+        <label for="password_confirmation">Confirma tu contraseña</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="mdi mdi-lock-check"></span>
+                </span>
+            </div>
+            <input type="password" id="password_confirmation" formControlName="password_confirmation" class="form-control"
+            [ngClass]="{'is-valid':password_confirmation.valid && (password_confirmation.dirty || password_confirmation.touched), 
+            'is-invalid': (password_confirmation.invalid || password.errors?.mustMatch) && (password_confirmation.dirty || password_confirmation.touched)}"
+            placeholder="••••••">
+        </div>
+        <form-error-messages [control]="password_confirmation"></form-error-messages>
+        <!-- extra errors -->
+        <div *ngIf="password_confirmation.errors?.mustMatch" class="text-danger">
+            <small>Las contraseñas deben coincidir</small>
+        </div>
+        <!-- /extra errors -->
+    </div>
+    <!-- /PASSWORD_CONFIRMATION -->
+    <!-- NAME -->
+    <div class="form-group">
+        <label for="name">Nombre</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="mdi mdi-account-details"></span>
+                </span>
+            </div>
+            <input type="text" id="name" formControlName="name" class="form-control"
+            [ngClass]="{'is-valid':name.valid && (name.dirty || name.touched),
+            'is-invalid': name.invalid && (name.dirty || name.touched)}"
+            placeholder="John Doe">
+        </div>
+        <form-error-messages [control]="name"></form-error-messages>
+    </div>
+    <!-- /NAME -->
+    <!-- BORN_DATE -->
+    <div class="form-group">
+        <label for="born_date">Fecha de nacimiento</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="mdi mdi-calendar-month"></span>
+                </span>
+            </div>
+            <input type="date" id="born_date" formControlName="born_date" class="form-control"
+            [ngClass]="{'is-valid':born_date.valid && (born_date.dirty || born_date.touched),
+            'is-invalid': born_date.invalid && (born_date.dirty || born_date.touched)}"
+            placeholder="01/01/1970">
+        </div>
+        <form-error-messages [control]="born_date"></form-error-messages>
+        <!-- extra errors -->
+        <div *ngIf="born_date.errors?.invalidDateFormat" class="text-danger">
+            <small>Formato de fecha no válido</small>
+        </div>
+        <div *ngIf="born_date.errors?.tooYoung" class="text-danger">
+            <small>Debes tener al menos 18 años</small>
+        </div>
+        <!-- /extra errors -->
+    </div>
+    <!-- /BORN_DATE -->
+    <!-- SUBMIT BTN -->
+    <button type="submit" class="btn btn-primary"
+    [disabled]="registerForm.invalid">
+        Registrarse
+    </button>
+    <!-- /SUBMIT BTN -->
+</form>

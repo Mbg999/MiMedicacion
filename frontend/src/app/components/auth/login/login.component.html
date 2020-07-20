@@ -1,0 +1,44 @@
+<form novalidate [formGroup]="loginForm" (submit)="login()">
+    <!-- EMAILL -->
+    <div class="form-group">
+        <label for="emaill">Correo electrónico</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="mdi mdi-account"></span>
+                </span>
+            </div>
+            <input type="text" id="emaill" formControlName="emaill" class="form-control"
+            [ngClass]="{'is-valid':emaill.valid && (emaill.dirty || emaill.touched),
+            'is-invalid': (emaill.invalid || emailNotFound) && (emaill.dirty || emaill.touched)}"
+            placeholder="usuario@mail.com">
+        </div>
+        <div class="alert alert-danger" *ngIf="emailNotFound">{{ emailNotFound }}</div>
+        <form-error-messages [control]="emaill"></form-error-messages>
+    </div>
+    <!-- /EMAILL -->
+    <!-- PASSWORDL -->
+    <div class="form-group">
+        <label for="passwordl">Contraseña</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="mdi mdi-lock"></span>
+                </span>
+            </div>
+            <input type="password" id="passwordl" formControlName="passwordl" class="form-control"
+            [ngClass]="{'is-valid':passwordl.valid && (passwordl.dirty || passwordl.touched),
+            'is-invalid': (passwordl.invalid || incorrectPassword) && (passwordl.dirty || passwordl.touched)}"
+            placeholder="••••••">
+        </div>
+        <div class="alert alert-danger" *ngIf="incorrectPassword">{{ incorrectPassword }}</div>
+        <form-error-messages [control]="passwordl"></form-error-messages>
+    </div>
+    <!-- /PASSWORDL -->
+    <!-- SUBMIT BTN -->
+    <button type="submit" class="btn btn-primary"
+    [disabled]="loginForm.invalid">
+        Iniciar sesión
+    </button>
+    <!-- /SUBMIT BTN -->
+</form>
