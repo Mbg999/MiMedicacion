@@ -25,4 +25,4 @@ Back-end: API Rest con Java web application y Maven
 <p>Añadir la imagen <code>backend/nopicture.png</code> al directorio anterior</p>
 
 <p>Front-end: Angular 10 + ngBootstrap + @mdi/font icons (material design icons) + SweetAlert2</p>
-<p>`npm i` para instalar `node_modules`</p>
+<p><code>npm i</code> para instalar <code>node_modules</code></p>
