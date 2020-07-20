@@ -23,3 +23,6 @@ Back-end: API Rest con Java web application y Maven
 
 <p>no olvides crear el árbol de directorios <code>C:\MiMedicacionAssets\users\pictures</code> o modificar el path al que tu prefieras desde <code>MiMedicacion/src/main/java/com/miguel/mimedicacion/utils/Upload.java</code></p>
 <p>Añadir la imagen <code>backend/nopicture.png</code> al directorio anterior</p>
+
+<p>Front-end: Angular 10 + ngBootstrap + @mdi/font icons (material design icons) + SweetAlert2</p>
+<p>`npm i` para instalar `node_modules`</p>
