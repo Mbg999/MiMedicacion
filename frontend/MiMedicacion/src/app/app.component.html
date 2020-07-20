@@ -1,0 +1,13 @@
+<div id="main_container" class="position-relative">
+    <header>
+        <nav *ngIf="user">
+            <app-navbar></app-navbar>
+        </nav>
+    </header>
+    <main class="container position-relative">
+        <router-outlet></router-outlet>
+    </main>
+    <footer class="position-absolute">
+        <app-footer></app-footer>
+    </footer>
+</div>

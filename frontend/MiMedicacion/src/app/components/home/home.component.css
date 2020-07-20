@@ -1,0 +1,23 @@
+.add_btn_div {
+    bottom: 15%;
+    right: 5%;
+    box-shadow: 1px 1px solid black;
+}
+
+.add_btn_div > button {
+    box-shadow: 3px 3px 8px black;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.add_btn_div > button:hover {
+    transform: scale(1.1);
+}
+
+.accordion .btn-link:hover {
+    text-decoration: none !important;
+}
+
+.not-poiner:hover {
+    cursor: auto;
+}

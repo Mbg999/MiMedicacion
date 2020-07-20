@@ -1,0 +1,159 @@
+<div *ngIf="medications; else loading">
+    <!-- MEDICATIONS LIST -->
+    <div *ngIf="medications.length > 0; else empty">
+        <ngb-accordion ng-init="isOpen = false" #acc="ngbAccordion" activeIds="ngb-panel-0">
+            <ngb-panel *ngFor="let medication of medications; let i = index">
+                <ng-template ngbPanelHeader>
+                  <div class="d-flex justify-content-between">
+                    <!-- MEDICATION NAME -->
+                    <button type="button"
+                    (click)="getTakens(i)"
+                    ngbPanelToggle
+                    class="btn btn-link p-0">
+                        {{ medication.name }}
+                    </button>
+                    <!-- OPTIONS -->
+                    <div class="btn-group">
+                        <!-- TAKEN -->
+                        <button *ngIf="medication.last_taken && !medication.finished; else firstTaken"
+                        type="button"
+                        class="btn btn-info"
+                        title="Medicación tomada"
+                        (click)="taken(i)">
+                            <span class="mdi mdi-calendar-clock"></span>
+                        </button>
+                        <!-- /TAKEN -->
+                        <!-- FIRST TAKEN -->
+                        <ng-template #firstTaken>
+                            <button *ngIf="!medication.finished; else finished" type="button"
+                            class="btn btn-success"
+                            title="Primera toma de la medicación"
+                            (click)="taken(i)">
+                                Primera toma
+                            </button>
+                            <ng-template #finished>
+                                <button class="btn btn-ligth not-poiner px-2">Tratamiento finalizado</button>
+                            </ng-template>
+                        </ng-template>
+                        <!-- /FIRST TAKEN -->
+                        <!-- LG DEVICES FINISHED, UPDATE AND DELETE -->
+                        <!-- IS FINISHED -->
+                        <button *ngIf="medication.finished; else unfinished"
+                        type="button"
+                        title='Tratamiendo terminado, ¿marcar como "tratamiento en proceso"?'
+                        class="btn btn-primary btn-small d-none d-lg-block"
+                        (click)="toggleFinished(i)">
+                            <span class="mdi mdi-checkbox-marked-outline"></span>
+                        </button>
+                        <ng-template #unfinished>
+                            <button type="button"
+                            class="btn btn-primary btn-small d-none d-lg-block"
+                            title='Tratamiento en proceso, ¿marcar como "tratamiento finalizado"?'
+                            (click)="toggleFinished(i)">
+                                <span class="mdi mdi-checkbox-blank-outline"></span>
+                            </button>
+                        </ng-template>
+                        <!-- /IS FINISHED -->
+                        <button type="button"
+                        title="Actualizar"
+                        class="btn btn-warning btn-small d-none d-lg-block"
+                        (click)="update(i)">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
+                        <button type="button"
+                        title="Eliminar"
+                        class="btn btn-danger btn-small d-none d-lg-block"
+                        (click)="delete(i)">
+                            <span class="mdi mdi-delete"></span>
+                        </button>
+                        <!-- /LG DEVICES FINISHED, UPDATE AND DELETE -->
+                    </div>
+                    <!-- /OPTIONS -->
+                  </div>
+              </ng-template>
+              <ng-template ngbPanelContent>
+                <!-- MEDICATION DESCRIPTION -->
+                {{medication.description}}
+                <!-- SMALL TO LG DEVICES FINISHED, UPDATE AND DELETE -->
+                <div class="d-block d-lg-none mt-2 pt-2 border-top btn-group">
+                    <!-- IS FINISHED -->
+                    <button *ngIf="medication.finished; else unfinished"
+                    type="button"
+                    title='Tratamiendo terminado, ¿marcar como "tratamiento en proceso"?'
+                    class="btn btn-primary btn-small"
+                    (click)="toggleFinished(i)">
+                        <span class="mdi mdi-checkbox-marked-outline"></span>
+                    </button>
+                    <ng-template #unfinished>
+                        <button type="button"
+                        class="btn btn-primary btn-small"
+                        title='Tratamiento en proceso, ¿marcar como "tratamiento finalizado"?'
+                        (click)="toggleFinished(i)">
+                            <span class="mdi mdi-checkbox-blank-outline"></span>
+                        </button>
+                    </ng-template>
+                    <!-- /IS FINISHED -->
+                    <button type="button"
+                    title="Actualizar"
+                    class="btn btn-warning btn-small"
+                    (click)="update(i)">
+                        <span class="mdi mdi-pencil"></span>
+                    </button>
+                    <button type="button"
+                    title="Eliminar"
+                    class="btn btn-danger btn-small"
+                    (click)="delete(i)">
+                        <span class="mdi mdi-delete"></span>
+                    </button>
+                </div>
+                <!-- /SMALL TO LG DEVICES FINISHED, UPDATE AND DELETE -->
+                <!-- TAKENS -->
+                <div class="mt-2 pt-2 border-top">
+                    <h6 class="text-center">Registro de tomas de la medicación</h6>
+                    <div *ngIf="medication.takens; else loading">
+                        <div *ngIf="medication.takens.length > 0; else empty">
+                            <div *ngFor="let taken of medication.takens; let j = index"
+                            class="d-flex justify-content-between py-2 px-1"
+                            [ngClass]="{'bg-light': j%2==0}">
+                                <p>{{ taken.taken_at }}</p>
+                                <button type="button"
+                                class="btn btn-danger btn-small"
+                                (click)="deleteTaken(i, j)">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </div>
+                        <ng-template #empty>
+                            <p>No hay registros de la toma de esta medicación aún</p>
+                        </ng-template>
+                    </div>
+                    <ng-template #loading>
+                        <p class="mdi mdi-loading mdi-spin"> Cargando...</p>
+                    </ng-template>
+                </div>
+                <!-- /TAKENS -->
+              </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+    <!-- /MEDICATIONS LIST -->
+    <!-- EMPTY LIST -->
+    <ng-template #empty>
+        <h3>Parece que aún no has registrado ninguna medicación, prueba a hacerlo desde el botón de la zona inferior derecha 😃</h3>
+    </ng-template>
+    <!-- /EMPTY LIST -->
+    <!-- ADD MEDICATION BUTTON -->
+    <div class="float-right position-fixed add_btn_div">
+        <button type="button"
+        class="btn btn-info rounded-circle"
+        (click)="create()">
+            <i class="mdi mdi-pencil mdi-24px"></i>
+        </button>
+    </div>
+    <!-- /ADD MEDICATION BUTTON -->
+</div>
+<!-- LOADING -->
+<ng-template #loading>
+    <h1 class="mdi mdi-loading mdi-spin"> Cargando...</h1>
+</ng-template>
+<!-- /LOADING -->

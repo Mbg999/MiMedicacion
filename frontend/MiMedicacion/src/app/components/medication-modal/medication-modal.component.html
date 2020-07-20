@@ -1,0 +1,95 @@
+<div class="modal-content">
+    <!-- MODAL HEADER -->
+    <div class="modal-header">
+        <h3>{{ (medication) ? 'Actualizar medicación' : 'Registrar nueva medicación' }}</h3>
+        <button type="button" class="close" (click)="modalService.dismiss()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <input type="text" class="d-none" ngbAutofocus>
+        <!-- 
+            trick for "remove" autofocus, it has some double clicks problems
+            https://stackoverflow.com/questions/53613974/angular7-and-ngbmodal-how-to-remove-default-auto-focus
+        -->
+    </div>
+    <!-- /MODAL HEADER -->
+    <!-- MODAL BODY -->
+    <div class="modal-body" #modalBody>
+        <form [formGroup]="medicationForm" novalidate>
+            <!-- NAME -->
+            <div class="form-group">
+                <label for="name">Nombre del medicamento</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <span class="mdi mdi-format-title"></span>
+                        </span>
+                    </div>
+                    <input type="text" id="name" formControlName="name" class="form-control"
+                    [ngClass]="{'is-valid':name.valid && (name.dirty || name.touched),
+                    'is-invalid': name.invalid && (name.dirty || name.touched)}"
+                    placeholder="Paracetamol">
+                </div>
+                <form-error-messages [control]="name"></form-error-messages>
+            </div>
+            <!-- /NAME -->
+            <!-- DESCRIPCION -->
+            <div class="form-group">
+                <label for="name">Descripción del uso del medicamento</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <span class="mdi mdi-format-align-left"></span>
+                        </span>
+                    </div>
+                    <textarea formControlName="description" id="description" class="form-control"
+                    [ngClass]="{'is-valid':description.valid && (description.dirty || description.touched),
+                    'is-invalid': description.invalid && (description.dirty || description.touched)}"
+                    placeholder='Descripcion en caso de que sea necesaria. Ejemplo: "Echar pastilla en medio vaso de agua y esperar a que se disuelva antes de beber"'></textarea>
+                </div>
+                <form-error-messages [control]="description"></form-error-messages>
+            </div>
+            <!-- /DESCRIPCION -->
+            <!-- HOURS_INTERVAL -->
+            <div class="form-group">
+                <label for="hours_interval">Horas de intervalo entre una toma y otra</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <span class="mdi mdi-clock"></span>
+                        </span>
+                    </div>
+                    <input type="number" id="hours_interval" formControlName="hours_interval" class="form-control"
+                    [ngClass]="{'is-valid':hours_interval.valid && (hours_interval.dirty || hours_interval.touched),
+                    'is-invalid': hours_interval.invalid && (hours_interval.dirty || hours_interval.touched)}"
+                    placeholder="8">
+                </div>
+                <form-error-messages [control]="hours_interval"></form-error-messages>
+            </div>
+            <!-- /HOURS_INTERVAL -->
+            <!-- FINISHED -->
+            <div *ngIf="medication" class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="finished" formControlName="finished">
+                    <label class="form-check-label" for="finished">¿Has terminado el tratamiento con este medicamento?</label>
+                </div>
+            </div>
+            <!-- /FINISHED -->
+        </form>
+    </div>
+    <!-- /MODAL BODY -->
+    <!-- MODAL FOOTER -->
+    <div class="modal-footer">
+        <!-- CLOSE BTN -->
+        <button type="button" class="btn btn-primary mr-auto" (click)="modalService.dismiss()">
+            Cerrar
+        </button>
+        <!-- /CLOSE BTN -->
+        <!-- UPDATE BTN -->
+        <button type="button" class="btn btn-primary"
+        [disabled]="medicationForm.invalid" (click)="send()">
+            {{ (medication) ? 'Actualizar' : 'Registrar' }}
+        </button>
+        <!-- /UPDATE BTN -->
+    </div>
+    <!-- /MODAL FOOTER -->
+</div>
