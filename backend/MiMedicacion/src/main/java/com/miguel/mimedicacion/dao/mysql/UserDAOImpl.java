@@ -213,7 +213,7 @@ public class UserDAOImpl implements UserDAO {
     /**
      * Update a user picture and return if was or not updated
      * 
-     * @param o
+     * @param o User
      * @return boolean
      */
     @Override
