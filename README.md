@@ -27,3 +27,18 @@ Aplicacion con usuarios, que sirve para que el usuario guarde su medicación y l
 ### Front-end: Angular 10 + ngBootstrap + @mdi/font icons (material design icons) + SweetAlert2
 <p><code>npm i</code> para instalar <code>node_modules</code></p>
 <p>El back-end ha sido desarrollado usando el GlashFish Server de NetBeans, por lo que la URL del back-end es http://localhost:8080/MiMedicacion , puedes cambiarla en el archivo environment de Angular en caso de que tu URL sea distinta</p>
+
+#### Algunas imágenes
+
+<div>
+  <img src="https://i.imgur.com/t7obgit.png" alt="registro" title="registro">
+  <img src="https://i.imgur.com/LFfPle1.png" alt="inicio de sesion" title="inicio de sesion">
+</div>
+<div>
+  <img src="https://i.imgur.com/SPKfCr3.png" alt="Actualizar usuario" title="Actualizar usuario">
+  <img src="https://i.imgur.com/OMmz5Je.png" alt="home con notificacion" title="home con notificacion">
+</div>
+<div>
+  <img src="https://i.imgur.com/JmhB6ID.png" alt="Registrar medicacion" title="Registrar medicacion">
+  <img src="https://i.imgur.com/pqKLXmT.png" alt="responsive" title="responsive">
+</div>
