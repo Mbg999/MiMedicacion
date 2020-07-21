@@ -1,7 +1,4 @@
 # MiMedicacion
-Aplicación para guardar y recordar tu medicación
-# EN CONSTRUCCION
-
 Aplicacion con usuarios, que sirve para que el usuario guarde su medicación y la aplicación le recuerde cuando tomarla
 
 ### BD: MySQL
