@@ -106,6 +106,7 @@ export class HomeComponent implements OnInit {
     this.openMedicationModal()
     .then((result)=>{
       this.medications.unshift(result.medication);
+      if(this.medications.length < 2) this.getTakens(0);
       if(!this.notificationInterval) this.startNotificationLoop();
     }).catch((err)=>{}); // catch for ngBootstrap modal requirement
   }
