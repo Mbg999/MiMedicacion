@@ -28,8 +28,8 @@ Aplicacion con usuarios, que sirve para que el usuario guarde su medicación y l
 #### Algunas imágenes
 
 <div>
-  <img src="https://i.imgur.com/t7obgit.png" alt="registro" title="registro">
-  <img src="https://i.imgur.com/LFfPle1.png" alt="inicio de sesion" title="inicio de sesion">
+  <img src="https://i.imgur.com/o5ISb7O.png" alt="registro" title="registro">
+  <img src="https://i.imgur.com/7vNNE8E.png" alt="inicio de sesion" title="inicio de sesion">
 </div>
 <div>
   <img src="https://i.imgur.com/SPKfCr3.png" alt="Actualizar usuario" title="Actualizar usuario">
