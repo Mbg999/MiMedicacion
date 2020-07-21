@@ -24,7 +24,6 @@ public class MedicationDAOImpl implements MedicationDAO {
     
     // all the used SQL sentences
     private static final String FIRST = "SELECT * FROM medications WHERE id = ?";
-    private static final String ALL = "SELECT * FROM medications";
     private static final String ALL_OF_A_USER = "SELECT * FROM medications WHERE user_id = ? ORDER BY created_at DESC, finished ASC";
     private static final String INSERT = "INSERT INTO medications(user_id, name, description, hours_interval) values(?,?,?,?)";
     private static final String UPDATE = "UPDATE medications "+
@@ -86,48 +85,6 @@ public class MedicationDAOImpl implements MedicationDAO {
         return med;
     }
 
-    /**
-     * Returns all the medications
-     * 
-     * @return List&lt;Medication&gt;
-     */
-    @Override
-    public List<Medication> all() {
-        ResultSet rs = null;
-        Medication med;
-        List<Medication> meds = new ArrayList();
-        
-        try {
-            rs = db.statement(ALL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            
-            while(rs.next()){
-                med = new Medication();
-                med.setId(rs.getInt("id"));
-                med.setUser_id(rs.getInt("user_id"));
-                med.setName(rs.getString("name"));
-                med.setDescription(rs.getString("description"));
-                med.setHours_interval(rs.getInt("hours_interval"));
-                med.setFinished(rs.getBoolean("finished"));
-                med.setCreated_at(rs.getTimestamp("created_at"));
-                med.setUpdated_at(rs.getTimestamp("updated_at"));
-                med.setLast_taken(this.tdi.lastOfAMedication(med.getId()));
-                meds.add(med);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if(rs != null){
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(MedicationDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        
-        return meds;
-    }
-    
     /**
      * Returns all the medications of a user
      * 

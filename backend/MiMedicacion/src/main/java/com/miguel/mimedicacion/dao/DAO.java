@@ -17,7 +17,6 @@ import java.util.List;
 public interface DAO<T,K> {
     // T -> class name, o -> object var name
     T first(K id);
-    List<T> all();
     int insert(T o);
     boolean update(T o);
     boolean delete(T o);

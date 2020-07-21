@@ -10,8 +10,6 @@ import com.miguel.mimedicacion.dao.UserDAO;
 import com.miguel.mimedicacion.models.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +23,6 @@ public class UserDAOImpl implements UserDAO {
     // all the used SQL sentences
     private static final String FIRST = "SELECT * FROM users WHERE id = ?";
     private static final String FIRSTBYEMAIL = "SELECT * FROM users WHERE email like ?";
-    private static final String ALL = "SELECT * FROM users";
     private static final String INSERT = "INSERT INTO users(email, password, name, born_date) values(?,?,?,?)";
     private static final String UPDATE = "UPDATE users "+
             "SET password = ?, name = ?, born_date = ?, mins_before = ? "+
@@ -126,47 +123,6 @@ public class UserDAOImpl implements UserDAO {
         }
         
         return user;
-    }
-
-    /**
-     * Returns all the users
-     * 
-     * @return List&lt;User&gt;
-     */
-    @Override
-    public List<User> all() {
-        ResultSet rs = null;
-        User user = null;
-        List<User> users = new ArrayList();
-        
-        try {
-            rs = db.statement(ALL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            while(rs.next()){
-                user = new User();
-                user.setId(rs.getInt("id"));
-                user.setEmail(rs.getString("email"));
-                // user.setPassword(rs.getString("password"));  // don't give the password
-                user.setName(rs.getString("name"));
-                user.setBorn_date(rs.getDate("born_date"));
-                user.setPicture(rs.getString("picture"));
-                user.setMins_before(rs.getInt("mins_before"));
-                user.setCreated_at(rs.getTimestamp("created_at"));
-                user.setUpdated_at(rs.getTimestamp("updated_at"));
-                users.add(user);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if(rs != null){
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        
-        return users;
     }
 
     /**

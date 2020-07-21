@@ -43,49 +43,6 @@ public class TakenResource {
     }
     
     /**
-     * Find by id
-     * 
-     * @param id int
-     * @return JSON response
-     */
-    @GET
-    @Path("find/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") int id){
-        Taken taken = this.tdi.first(id);
-        
-        if(taken == null){
-            return Response
-                .status(Response.Status.NOT_FOUND)
-                .entity(new TextResponse(false, "Taken not found", 404))
-                .build();
-        }
-        
-        
-        return Response
-                .status(Response.Status.OK)
-                .entity(new DataResponse(taken))
-                .build();
-    }
-    
-    /**
-     * Get all the taken rows
-     * 
-     * @return JSON response
-     */
-    @GET
-    @Path("all")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response all(){
-        List<Taken> taken = tdi.all();
-        
-        return Response
-                .status(Response.Status.OK)
-                .entity(new DataResponse(taken))
-                .build();
-    }
-    
-    /**
      * Get all the taken rows from a medication
      * 
      * @param token String, bearer token

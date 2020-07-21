@@ -41,49 +41,6 @@ public class MedicationResource {
     }
     
     /**
-     * Find by id
-     * 
-     * @param id int
-     * @return JSON response
-     */
-    @GET
-    @Path("find/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response find(@PathParam("id") int id){
-        Medication med = this.mdi.first(id);
-        
-        if(med == null){
-            return Response
-                .status(Response.Status.NOT_FOUND)
-                .entity(new TextResponse(false, "Medication not found", 404))
-                .build();
-        }
-        
-        
-        return Response
-                .status(Response.Status.OK)
-                .entity(new DataResponse(med))
-                .build();
-    }
-    
-    /**
-     * Get all the medications
-     * 
-     * @return JSON response
-     */
-    @GET
-    @Path("all")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response all(){
-        List<Medication> meds = mdi.all();
-        
-        return Response
-                .status(Response.Status.OK)
-                .entity(new DataResponse(meds))
-                .build();
-    }
-    
-    /**
      * Get all the medications of the auth user
      * 
      * @param token String, bearer token
@@ -112,24 +69,6 @@ public class MedicationResource {
         // /TOKEN VALIDATION
         
         meds = mdi.allOfAUser(user.getId());
-        
-        return Response
-                .status(Response.Status.OK)
-                .entity(new DataResponse(meds))
-                .build();
-    }
-    
-    /**
-     * Get all the medications of a user
-     * 
-     * @param id int
-     * @return JSON response
-     */
-    @GET
-    @Path("all/user/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response allOfAUser(@PathParam("id") int id){
-        List<Medication> meds = mdi.allOfAUser(id);
         
         return Response
                 .status(Response.Status.OK)
@@ -215,7 +154,7 @@ public class MedicationResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@HeaderParam("Authorization") String token, @PathParam("id") int id,
             @FormParam("name") String name, @FormParam("description") String description,
-            @FormParam("hours_interval") int hours_interval, @FormParam("finished") Boolean finished){
+            @FormParam("hours_interval") Integer hours_interval, @FormParam("finished") Boolean finished){
         
         User user;
         Medication med;
@@ -260,7 +199,7 @@ public class MedicationResource {
         // JDBC will update the object if at least one field is updated, so i don't need to control if the fields are updated or not
         if(name != null) med.setName(name.trim());
         if(description != null) med.setDescription(description.trim());
-        if(hours_interval > 0) med.setHours_interval(hours_interval);
+        if(hours_interval != null) med.setHours_interval(hours_interval);
         if(finished != null) med.setFinished(finished);
         
         if(!mdi.update(med)){
@@ -383,11 +322,14 @@ public class MedicationResource {
             errors.put("description", "The maximum description length is 1000");
         }
         
-        if(hours_interval < 0){
+        if(hours_interval != null){
+            if(hours_interval < 0){
             errors.put("hours_interval", "The minimum hours interval value is 0");
-        } else if(hours_interval > 255){
-            errors.put("hours_interval", "The maximum hours interval value is 255");
+            } else if(hours_interval > 255){
+                errors.put("hours_interval", "The maximum hours interval value is 255");
+            }
         }
+        
         
         return errors;
     }
