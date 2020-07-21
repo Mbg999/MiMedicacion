@@ -26,3 +26,4 @@ Aplicacion con usuarios, que sirve para que el usuario guarde su medicación y l
 
 ### Front-end: Angular 10 + ngBootstrap + @mdi/font icons (material design icons) + SweetAlert2
 <p><code>npm i</code> para instalar <code>node_modules</code></p>
+<p>El back-end ha sido desarrollado usando el GlashFish Server de NetBeans, por lo que la URL del back-end es http://localhost:8080/MiMedicacion , puedes cambiarla en el archivo environment de Angular en caso de que tu URL sea distinta</p>
