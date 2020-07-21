@@ -33,9 +33,9 @@ Aplicacion con usuarios, que sirve para que el usuario guarde su medicación y l
 </div>
 <div>
   <img src="https://i.imgur.com/SPKfCr3.png" alt="Actualizar usuario" title="Actualizar usuario">
-  <img src="https://i.imgur.com/OMmz5Je.png" alt="home con notificacion" title="home con notificacion">
+  <img src="https://i.imgur.com/E6AmG5g.png" alt="home con notificacion" title="home con notificacion">
 </div>
 <div>
   <img src="https://i.imgur.com/JmhB6ID.png" alt="Registrar medicacion" title="Registrar medicacion">
-  <img src="https://i.imgur.com/pqKLXmT.png" alt="responsive" title="responsive">
+  <img src="https://i.imgur.com/DlyE25a.png" alt="responsive" title="responsive">
 </div>
