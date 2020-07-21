@@ -4,7 +4,7 @@
             <app-navbar></app-navbar>
         </nav>
     </header>
-    <main class="container position-relative">
+    <main class="container position-relative" [ngClass]="{'bg-info text-light': !user}">
         <router-outlet></router-outlet>
     </main>
     <footer class="position-relative w-100 bg-info text-light">

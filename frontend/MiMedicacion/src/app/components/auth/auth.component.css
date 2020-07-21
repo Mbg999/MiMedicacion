@@ -6,3 +6,10 @@ b {
 b:hover {
     cursor: pointer;
 }
+
+.logo {
+    max-width: 300px;
+    width: 100%;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
