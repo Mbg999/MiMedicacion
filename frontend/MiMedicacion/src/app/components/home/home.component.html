@@ -9,7 +9,7 @@
                     <button type="button"
                     (click)="getTakens(i)"
                     ngbPanelToggle
-                    class="btn btn-link p-0">
+                    class="btn btn-link p-0 text-info name">
                         {{ medication.name }}
                     </button>
                     <!-- OPTIONS -->
@@ -109,7 +109,7 @@
                 <!-- /SMALL TO LG DEVICES FINISHED, UPDATE AND DELETE -->
                 <!-- TAKENS -->
                 <div class="mt-2 pt-2 border-top">
-                    <h6 class="text-center">Registro de tomas de la medicación</h6>
+                    <h6 class="text-center text-info">Registro de tomas de la medicación</h6>
                     <div *ngIf="medication.takens; else loading">
                         <div *ngIf="medication.takens.length > 0; else empty">
                             <div *ngFor="let taken of medication.takens; let j = index"

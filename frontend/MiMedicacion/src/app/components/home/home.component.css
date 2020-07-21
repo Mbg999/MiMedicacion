@@ -26,3 +26,8 @@
     background-color: rgb(255, 193, 193);
     border-radius: 10px;
 }
+
+.name {
+    font-weight: bold;
+    font-size: 18px;
+}
