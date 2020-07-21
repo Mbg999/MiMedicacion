@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 // SERVICES
 import { UserService } from './../../../services/user.service';
+import { AlertService } from './../../../services/alert.service';
 
 // INTERFACES
 import { User } from './../../../interfaces/user';
@@ -23,7 +24,8 @@ export class NavbarComponent {
 
   constructor(private _userService: UserService,
     private router: Router,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private _alertService: AlertService) { }
 
 
   public openUserModal(){
@@ -36,9 +38,14 @@ export class NavbarComponent {
   }
 
   public logout(){
-    this.isCollapsed = true;
-    this._userService.logout();
-    this.router.navigate(['/auth']);
+    this._alertService.choice("Cerrar sesión", "¿Desea cerrar sesión?", "question" ,"Si", "Cancelar")
+    .then((result)=>{
+      if(result.value){
+        this.isCollapsed = true;
+        this._userService.logout();
+        this.router.navigate(['/auth']);
+      }
+    });
   }
 
   // GETTERS

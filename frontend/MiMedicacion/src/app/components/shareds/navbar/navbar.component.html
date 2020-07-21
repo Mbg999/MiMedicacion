@@ -2,7 +2,7 @@
     <!-- NAVBAR BRAND -->
     <div class="navbar-brand mr-3">
         <a routerLink="/" title="home" (click)="isCollapsed = true">
-            <img width="200" src="assets/images/logo.png" alt="MiMedicación">
+            <img width="200" src="assets/logo.png" alt="MiMedicación">
         </a>
     </div>
     <!-- /NAVBAR BRAND -->
@@ -14,7 +14,7 @@
     </button>
     <!-- /TOGGLER -->
     <!-- NAVBAR CONTENT -->
-    <div class="navbar-collapse" [class.collapse]="isCollapsed" id="content" [ngClass]="{'animated fadeIn faster': !isCollapsed}">
+    <div class="navbar-collapse pt-3 pt-lg-0" [class.collapse]="isCollapsed" id="content" [ngClass]="{'animated fadeIn faster': !isCollapsed}">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link p-0" (click)="openUserModal()">

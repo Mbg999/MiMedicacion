@@ -42,13 +42,13 @@ export class MedicationModalComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    if(this.medication){
+    if(this.medication){ // its an update, set old values
       this.medicationForm.addControl('finished', new FormControl([]));
       this.name.setValue(this.medication.name);
       this.description.setValue(this.medication.description);
       this.hours_interval.setValue(this.medication.hours_interval);
       this.finished.setValue(this.medication.finished);
-    } else {
+    } else { // its a new medication, set the extra requirement validatiors
       this.name.setValidators([
         CustomValidators.required,
         CustomValidators.minLength(1),
@@ -69,31 +69,19 @@ export class MedicationModalComponent implements OnInit {
 
   private store(): void {
     this._medicationService.store(this.medicationForm.value)
-    .subscribe({
-      next: (resp)=>{
-        console.log(resp);
-        this.modalService.close({medication: resp.data});
-      },
-      error: (error)=>{
-        console.log(error);
-      }
+    .subscribe((resp)=>{
+      this.modalService.close({medication: resp.data});
     });
   }
 
   private update(): void {
     this._medicationService.update(this.medication.id, this.medicationForm.value)
-    .subscribe({
-      next: (resp)=>{
-        console.log(resp);
+    .subscribe((resp)=>{
         this.modalService.close({medication: resp.data});
-      },
-      error: (error)=>{
-        console.log(error);
-      }
     });
   }
 
-  // getters
+  // GETTERS
   get name(): AbstractControl{
     return this.medicationForm.get('name');
   }

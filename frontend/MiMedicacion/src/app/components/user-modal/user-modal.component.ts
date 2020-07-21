@@ -70,7 +70,6 @@ export class UserModalComponent implements OnInit {
         this.updatedPicture = "Imagen correctamente actualizada";
       },
       error: (err)=>{
-        console.log(err);
         picture.value = ""; // clear the input field
         if(err.error.message === "Not a valid file extension") this.pictureError = "Has de seleccionar un archivo de imagen válido. Se permiten las extensiones .png, .jpg y .jpeg";
       }
@@ -82,15 +81,10 @@ export class UserModalComponent implements OnInit {
     .then((result)=>{
       if(result.value){
         this._userService.delete()
-        .subscribe({
-          next: (resp)=>{
+        .subscribe(()=>{
             this.modalService.close();
             this.router.navigate(['/auth']);
             this._alertService.simpleText("Correctamente eliminado", "Tu usuario ha sido eliminado correctamente", "success");
-          },
-          error: (err)=>{ // really weird to happen
-            console.log(err);
-          }
         });
       }
     });

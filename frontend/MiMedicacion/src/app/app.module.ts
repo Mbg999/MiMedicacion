@@ -21,10 +21,11 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/shareds/navbar/navbar.component';
 import { FooterComponent } from './components/shareds/footer/footer.component';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
+import { MedicationModalComponent } from './components/medication-modal/medication-modal.component';
+import { ToastComponent } from './components/shareds/toast/toast.component';
 
 // PIPES
 import { ImagePipe } from './pipes/image.pipe';
-import { MedicationModalComponent } from './components/medication-modal/medication-modal.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MedicationModalComponent } from './components/medication-modal/medicati
     FooterComponent,
     ImagePipe,
     UserModalComponent,
-    MedicationModalComponent
+    MedicationModalComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

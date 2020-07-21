@@ -21,3 +21,8 @@
 .not-poiner:hover {
     cursor: auto;
 }
+
+.have-to-take {
+    background-color: rgb(255, 193, 193);
+    border-radius: 10px;
+}

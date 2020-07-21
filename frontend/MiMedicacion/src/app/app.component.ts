@@ -28,14 +28,13 @@ export class AppComponent implements OnInit {
       if(result) {
         this._userService.refreshUserData().subscribe({
           error: (err)=>{
+            this._userService.logout();
+            this.router.navigate(['/auth']);
             this._alertService.simpleText(
               "Token no válido",
               "Puede que el token haya caducado, prueba a volver a iniciar sesión",
               "error"
-            ).then(()=>{
-              this._userService.logout();
-              this.router.navigate(['/auth']);
-            });
+            );
           }
         });
       }

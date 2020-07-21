@@ -11,4 +11,5 @@ export interface Medication {
     updated_at?: string;
     last_taken?: Taken;
     takens?: Taken[];
+    notified?: boolean;
 }

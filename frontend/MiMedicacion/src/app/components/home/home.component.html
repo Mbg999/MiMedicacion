@@ -4,7 +4,7 @@
         <ngb-accordion ng-init="isOpen = false" #acc="ngbAccordion" activeIds="ngb-panel-0">
             <ngb-panel *ngFor="let medication of medications; let i = index">
                 <ng-template ngbPanelHeader>
-                  <div class="d-flex justify-content-between">
+                  <div class="d-flex justify-content-between pl-1" [ngClass]="{'have-to-take': medication.notified}">
                     <!-- MEDICATION NAME -->
                     <button type="button"
                     (click)="getTakens(i)"
@@ -113,7 +113,7 @@
                     <div *ngIf="medication.takens; else loading">
                         <div *ngIf="medication.takens.length > 0; else empty">
                             <div *ngFor="let taken of medication.takens; let j = index"
-                            class="d-flex justify-content-between py-2 px-1"
+                            class="d-flex justify-content-between py-2 pl-2 pr-1"
                             [ngClass]="{'bg-light': j%2==0}">
                                 <p>{{ taken.taken_at }}</p>
                                 <button type="button"

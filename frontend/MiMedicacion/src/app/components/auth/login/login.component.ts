@@ -43,7 +43,6 @@ export class LoginComponent {
   public login(){
     this.emailNotFound = null;
     this.incorrectPassword = null;
-    console.log(this.emaill.value);
     // the keys was changed for do not have problems on views, but backend needs email and password as keys
     let data: any = {
       email: this.emaill.value,
@@ -51,14 +50,12 @@ export class LoginComponent {
     };
     this._userService.login(data)
     .subscribe({
-      next: (resp)=>{
-        console.log(resp);
+      next: ()=>{
         this.router.navigate(['/home']);
       },
       error: (err)=>{
         if(err.error.errors.email) this.emailNotFound = "Este correo no ha sido registrado";
         if(err.error.errors.password) this.incorrectPassword = "Contraseña incorrecta";
-        console.log(err);
       }
     });
   }

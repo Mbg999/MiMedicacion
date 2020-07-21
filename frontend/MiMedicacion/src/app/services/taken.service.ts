@@ -5,9 +5,6 @@ import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
 import { UserService } from './user.service';
 
-// INTERFACES
-import { Medication } from './../interfaces/medication';
-
 
 @Injectable({
   providedIn: 'root'

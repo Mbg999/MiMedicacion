@@ -47,10 +47,9 @@ export class RegisterComponent {
 
   public register(){
     this.takenEmail = null;
-    console.log(this.registerForm.value);
     this._userService.register(this.registerForm.value)
     .subscribe({
-      next: (resp)=>{
+      next: ()=>{
         this.router.navigate(['/home']);
       },
       error: (err)=>{

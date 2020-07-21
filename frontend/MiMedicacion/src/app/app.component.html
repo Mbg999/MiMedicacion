@@ -1,4 +1,4 @@
-<div id="main_container" class="position-relative">
+<div id="main_container" class="position-relative" [ngClass]="{'bg-info text-light': !user}">
     <header>
         <nav *ngIf="user">
             <app-navbar></app-navbar>
@@ -7,7 +7,8 @@
     <main class="container position-relative">
         <router-outlet></router-outlet>
     </main>
-    <footer class="position-absolute">
+    <footer class="position-absolute w-100 bg-info text-light">
         <app-footer></app-footer>
     </footer>
+    <app-toasts></app-toasts>
 </div>
