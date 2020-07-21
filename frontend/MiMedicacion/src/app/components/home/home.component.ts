@@ -150,6 +150,7 @@ export class HomeComponent implements OnInit {
     .subscribe((resp)=>{
       this.medications[i].finished = resp.data.finished;
       this.medications[i].updated_at = resp.data.updated_at;
+      this.medications[i].notified = false;
     });
   }
 
