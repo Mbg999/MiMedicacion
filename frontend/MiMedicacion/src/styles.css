@@ -29,12 +29,13 @@ body { /* sweetalert2 bug https://github.com/sweetalert2/sweetalert2/issues/678 
 }
 
 main {
-  min-height: 90%;
+  min-height: calc(100vh - 96px); /* 56 header height 40 footer height*/
+  padding-bottom: 10px;
 }
 
 footer {
   bottom: 0;
-  height: 41px;
+  height: 40px;
 }
 
 .picture {
